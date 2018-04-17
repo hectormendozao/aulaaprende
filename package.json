@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Aula @prende 2.0",
   "main": "index.js",
+  "bin": {
+    "aulaaprende": "index.js"
+  },
   "scripts": {
     "test": "echo \"No test command!\""
   },
