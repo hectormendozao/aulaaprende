@@ -19,6 +19,10 @@
   "engines": {
     "node": ">=6.14.1"
   },
+  "repository": {
+		"type": "git",
+        "url": "git+https://github.com/hectormendozao/aulaaprende.git"
+  },
   "dependencies": {
     "linux-sys-user": "^0.5.1",
     "request": "^2.85.0",
