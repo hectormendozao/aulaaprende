@@ -1,29 +1,33 @@
 {
   "name": "aulaaprende",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Aula @prende 2.0",
-  "license": "MIT",
-  "author": "Hector Mendoza <hector.mendoza@aprende.edu.mx> (https://aprende.edu.mx)",
-  "homepage": "https://aprende.edu.mx",
-  "main": "./index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No test command!\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hectormendozao/aulaaprende.git"
   },
   "keywords": [
-    "Coordinación General @prende.mx",
-    "aula @prende 2.0"
+    "aula",
+    "@prende"
   ],
+  "author": "Héctor S. Mendoza O.",
+  "license": "GLP-3.0",
+  "bugs": {
+    "url": "https://github.com/hectormendozao/aulaaprende/issues"
+  },
+  "homepage": "https://github.com/hectormendozao/aulaaprende#readme",
   "os": [
     "linux"
   ],
   "engines": {
     "node": ">=6.14.1"
   },
-  "repository": {
-		"type": "git",
-        "url": "git+https://github.com/hectormendozao/aulaaprende.git"
-  },
   "dependencies": {
+    "auto-updater": "^1.0.2",
     "linux-sys-user": "^0.5.1",
     "request": "^2.85.0",
     "systeminformation": "^3.38.0"
