@@ -57,7 +57,7 @@ function revisaConfiguracion() {
 	phpv = execSync('php -v').toString('utf8');
 	apache2v = execSync('apache2 -v').toString('utf8');
 	var fs = require('fs');
-	var hypsoft = require('./lib/hypsoft.js');
+	var mendoza = require('./lib/mendoza.js');
     if(fs.existsSync(configCCT)) {
     	console.log("Existe CCT");
     	var mac = [];
@@ -69,7 +69,7 @@ function revisaConfiguracion() {
     	console.log(mac);
     	var cct = fs.readFileSync(configCCT).toString('UTF-8').trim();
     	console.log(cct);
-    	hypsoft.enviaRegistro({
+    	mendoza.enviaRegistro({
 			  action: 'registerCCT',
 	          cct: cct,
 	          mac: mac,
