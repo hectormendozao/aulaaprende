@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 
-/**
- * Derechos Reservados © 2018. @prende 2.0 es la Estrategia Digital en Educación
- * de la Secretaría de Educación Pública que busca fomentar el uso de las TIC
- * para fomentar el desarrollo de las habilidades digitales y el pensamiento
- * computacional, necesarios en el contexto social y económico del siglo XXI. 
- */
+console.log("algo");
+process.exit();
+
 console.log("Iniciando ejecución");
 var config_dir = '/tmp/temp/var/lib/aula@prende/';
 var configCCT = "/tmp/temp/usr/lib/ttyc/a10c5675cab628c1ab82b7ee37e71cd9";
@@ -253,20 +250,4 @@ process.on('SIGUSR2', exitHandler.bind());
 // }
 //
 
-import {
-	  fetchLatestPackageVersion,
-	  installPackageVersion,
-	  respawnProcess
-	} from '@mishguru/selfupdate'
 
-	import pkg from './package.json'
-
-	const latestVersion = await fetchLatestPackageVersion(pkg.name)
-
-	if (pkg.version !== latestVersion) {
-	  await installPackageVersion(pkg.name, latestVersion)
-
-	  console.log(`Upgraded from ${pkg.version} to ${latestVersion}. Restarting...`)
-
-	  respawnProcess()
-	}

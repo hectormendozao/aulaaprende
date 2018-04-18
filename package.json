@@ -1,6 +1,6 @@
 {
   "name": "aulaaprende",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Aula @prende 2.0",
   "main": "aulaaprende.js",
   "bin": {
@@ -17,7 +17,7 @@
     "aula",
     "@prende"
   ],
-  "author": "Héctor S. Mendoza O.",
+  "author": "HÃ©ctor S. Mendoza O.",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/hectormendozao/aulaaprende/issues"
@@ -30,7 +30,6 @@
     "node": ">=6.14.1"
   },
   "dependencies": {
-    "@mishguru/selfupdate": "^3.0.0",
     "linux-sys-user": "^0.5.1",
     "request": "^2.85.0",
     "systeminformation": "^3.38.0"
