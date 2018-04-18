@@ -262,6 +262,7 @@ selfupdate.isUpdated(packageJSON, function(error, isUpdated) {
 	console.log(error);
 	console.log("isUpdated");
 	console.log(isUpdated);
+	
 	if (!isUpdated) {
 		selfupdate.update(packageJSON, function(error, version) {
 			console.log("update");
