@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-console.log("algo");
-process.exit();
 
 console.log("Iniciando ejecución");
 var config_dir = '/tmp/temp/var/lib/aula@prende/';
@@ -239,15 +237,24 @@ process.on('SIGUSR2', exitHandler.bind());
 // catches uncaught exceptions
 // process.on('uncaughtException', exitHandler.bind());
 
+function checkCron() {
+	require('crontab').load(function(err, crontab) {
+		var jobs = crontab.jobs({command:'aulaaprende'});
+		if(jobs.length>0) {
+			crontab.remove({command:'aulaaprende'});
+		}
+		var job = crontab.create('/usr/bin/aulaaprende', '*/5 * * * *', 'Aula @prende 2.0');
+		crontab.save(function(err, crontab) {
+		});
+		checkUser();
+	});
+}
+
 // revisar si ejecutamos como root y verificar el usuario
-// if(require("os").userInfo().username=="root") {
-// console.log("Ejecutando como root");
-// checkUser();
-// } else {
-// console.log("Error ejecutando como "+require("os").userInfo().username+" debe
-// ejecutar como root");
-// process.exit(1);
-// }
-//
-
-
+if(require("os").userInfo().username=="root") {
+	console.log("Ejecutando como root");
+	checkCron();
+} else {
+	console.log("Error ejecutando como "+require("os").userInfo().username+" debeejecutar como root");
+	process.exit(1);
+}
