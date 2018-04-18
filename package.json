@@ -30,9 +30,9 @@
     "node": ">=6.14.1"
   },
   "dependencies": {
+    "@mishguru/selfupdate": "^3.0.0",
     "linux-sys-user": "^0.5.1",
     "request": "^2.85.0",
-    "selfupdate": "^1.1.0",
     "systeminformation": "^3.38.0"
   }
 }

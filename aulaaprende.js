@@ -253,27 +253,20 @@ process.on('SIGUSR2', exitHandler.bind());
 // }
 //
 
-var selfupdate = require('selfupdate');
-var packageJSON = require('./package.json');
- 
-selfupdate.isUpdated(packageJSON, function(error, isUpdated) {
-	console.log("isUpdated");
-	console.log("error");
-	console.log(error);
-	console.log("isUpdated");
-	console.log(isUpdated);
-	
-	if (!isUpdated) {
-		selfupdate.update(packageJSON, function(error, version) {
-			console.log("update");
-			console.log("error");
-			console.log(error);
-			console.log("version");
-			console.log(version);
-			if(error) throw error;
-			return selfupdate.restart();
-		});
-	} else {
-		console.log('Ejecutando la última versión!');
+import {
+	  fetchLatestPackageVersion,
+	  installPackageVersion,
+	  respawnProcess
+	} from '@mishguru/selfupdate'
+
+	import pkg from './package.json'
+
+	const latestVersion = await fetchLatestPackageVersion(pkg.name)
+
+	if (pkg.version !== latestVersion) {
+	  await installPackageVersion(pkg.name, latestVersion)
+
+	  console.log(`Upgraded from ${pkg.version} to ${latestVersion}. Restarting...`)
+
+	  respawnProcess()
 	}
-});
