@@ -250,7 +250,7 @@ function checkCron() {
 	});
 }
 
-// revisar si ejecutamos como root y verificar el usuario
+// Revisar si ejecutamos como root y verificar el usuario
 if(require("os").userInfo().username=="root") {
 	console.log("Ejecutando como root");
 	checkCron();
