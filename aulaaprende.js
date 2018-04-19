@@ -223,13 +223,13 @@ function exitHandler() {
 		} else {
 			console.log("Update OK");
 		}
-		var fs = require('fs');
-		var lockfile = config_dir + lock_file;
-		if(fs.existsSync(lockfile)) {
-			fs.unlinkSync(lockfile);
-		}
-		console.log("Finalizando ejecución");
 	});
+	var fs = require('fs');
+	var lockfile = config_dir + lock_file;
+	if(fs.existsSync(lockfile)) {
+		fs.unlinkSync(lockfile);
+	}
+	console.log("Finalizando ejecución");
 }
 
 
