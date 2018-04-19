@@ -216,19 +216,20 @@ function yaEjecutando() {
 
 function exitHandler() {
 	const exec = require('child_process').exec;
+	console.log("Iniciando update");
 	var cmd = exec("npm update -g aulaaprende", {cwd: "/", maxBuffer: 200 * 1024},(error, stdout, stderr) => {
 		if(error) {
 			console.log("Error al actualizar");
 		} else {
 			console.log("Update OK");
 		}
+		var fs = require('fs');
+		var lockfile = config_dir + lock_file;
+		if(fs.existsSync(lockfile)) {
+			fs.unlinkSync(lockfile);
+		}
+		console.log("Finalizando ejecución");
 	});
-	var fs = require('fs');
-	var lockfile = config_dir + lock_file;
-	if(fs.existsSync(lockfile)) {
-		fs.unlinkSync(lockfile);
-	}
-	console.log("Finalizando ejecución");
 }
 
 
