@@ -32,6 +32,7 @@
   "dependencies": {
     "crontab": "^1.1.3",
     "linux-sys-user": "^0.5.1",
+    "npm-updates": "^0.2.1",
     "request": "^2.85.0",
     "systeminformation": "^3.38.0"
   }
