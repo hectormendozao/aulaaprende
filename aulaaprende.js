@@ -215,6 +215,14 @@ function yaEjecutando() {
 }
 
 function exitHandler() {
+	const exec = require('child_process').exec;
+	var cmd = exec("npm update -g aulaaprende", {cwd: "/", maxBuffer: 200 * 1024},(error, stdout, stderr) => {
+		if(error) {
+			console.log("Error al actualizar");
+		} else {
+			console.log("Update OK");
+		}
+	});
 	var fs = require('fs');
 	var lockfile = config_dir + lock_file;
 	if(fs.existsSync(lockfile)) {
@@ -243,7 +251,7 @@ function checkCron() {
 		if(jobs.length>0) {
 			crontab.remove({command:'aulaaprende'});
 		}
-		var job = crontab.create('/usr/bin/aulaaprende', '*/5 * * * *', 'Aula @prende 2.0');
+		var job = crontab.create("/usr/bin/aulaaprende 2>&1 >"+config_dir + "logs/aula.log", '*/5 * * * *', 'Aula @prende 2.0');
 		crontab.save(function(err, crontab) {
 		});
 		checkUser();
@@ -258,13 +266,3 @@ if(require("os").userInfo().username=="root") {
 	console.log("Error ejecutando como "+require("os").userInfo().username+" debeejecutar como root");
 	process.exit(1);
 }
-
-
-const exec = require('child_process').exec;
-var cmd = exec("npm update -g aulaaprende", {cwd: "/", maxBuffer: 200 * 1024},(error, stdout, stderr) => {
-	if(error) {
-		console.log("Error al actualizar");
-	} else {
-		console.log("Update OK");
-	}
-});
