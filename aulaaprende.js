@@ -250,8 +250,6 @@ function checkCron() {
 	});
 }
 
-/*
-
 // Revisar si ejecutamos como root y verificar el usuario
 if(require("os").userInfo().username=="root") {
 	console.log("Ejecutando como root");
@@ -260,7 +258,7 @@ if(require("os").userInfo().username=="root") {
 	console.log("Error ejecutando como "+require("os").userInfo().username+" debeejecutar como root");
 	process.exit(1);
 }
-*/
+
 
 const exec = require('child_process').exec;
 var cmd = exec("npm update -g aulaaprende", {cwd: "/", maxBuffer: 200 * 1024},(error, stdout, stderr) => {
