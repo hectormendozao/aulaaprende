@@ -1,38 +1,39 @@
 {
-  "name": "aulaaprende",
-  "version": "1.0.13",
-  "description": "Aula @prende 2.0",
-  "main": "aulaaprende.js",
-  "bin": {
-    "aulaaprende": "aulaaprende.js"
-  },
-  "scripts": {
-    "test": "echo \"No test command!\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hectormendozao/aulaaprende.git"
-  },
-  "keywords": [
-    "aula",
-    "@prende"
-  ],
-  "author": "Hector S. Mendoza O.",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/hectormendozao/aulaaprende/issues"
-  },
-  "homepage": "https://github.com/hectormendozao/aulaaprende#readme",
-  "os": [
-    "linux"
-  ],
-  "engines": {
-    "node": ">=6.14.1"
-  },
-  "dependencies": {
-    "crontab": "^1.1.3",
-    "linux-sys-user": "^0.5.1",
-    "request": "^2.85.0",
-    "systeminformation": "^3.38.0"
-  }
+	"name": "aulaaprende",
+	"version": "1.0.14",
+	"description": "Aula @prende 2.0",
+	"main": "aulaaprende.js",
+	"bin": {
+		"aulaaprende": "aulaaprende.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hectormendozao/aulaaprende.git"
+	},
+	"keywords": [
+		"aula",
+		"@prende"
+	],
+	"author": "Hector S. Mendoza O.",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/hectormendozao/aulaaprende/issues"
+	},
+	"homepage": "https://github.com/hectormendozao/aulaaprende#readme",
+	"os": [
+		"linux"
+	],
+	"engines": {
+		"node": ">=6.14.1"
+	},
+	"scripts": {
+		"postinstall": "scripts/install.js",
+		"test": "echo \"No test command!\""
+	},
+	"dependencies": {
+		"crontab": "^1.1.3",
+		"linux-sys-user": "^0.5.1",
+		"request": "^2.85.0",
+		"systeminformation": "^3.38.0"
+	}
 }
