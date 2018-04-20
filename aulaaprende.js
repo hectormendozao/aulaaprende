@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-
-console.log("Iniciando ejecución");
+var debug = true;
+if(debug)
+	console.log("Iniciando ejecución");
 var config_dir = '/tmp/temp/var/lib/aula@prende/';
 var configCCT = "/tmp/temp/usr/lib/ttyc/a10c5675cab628c1ab82b7ee37e71cd9";
 var archivoMAC = '/tmp/temp/usr/lib/ttyc/a1416735702a7d53b1ce91245c2e5720';
@@ -53,7 +54,8 @@ function escribeMAC() {
 }
 
 function revisaConfiguracion() {
-	console.log("Revisando configuración");
+	if(debug)
+		console.log("Revisando configuración");
 	const execSync = require('child_process').execSync;
 	mysqlv = execSync('mysql --version').toString('utf8');
 	phpv = execSync('php -v').toString('utf8');
@@ -61,7 +63,8 @@ function revisaConfiguracion() {
 	var fs = require('fs');
 	var mendoza = require('./lib/mendoza.js');
     if(fs.existsSync(configCCT)) {
-    	console.log("Existe CCT");
+    	if(debug)
+    		console.log("Existe CCT");
     	var mac = [];
     	data.networkInterfaces.forEach(function(item, key) {
     		if(item.mac!='') {
@@ -93,13 +96,15 @@ function datos(fn, datos) {
 	chk[fn] = true;
 	data[fn] = datos;
 	if(Object.keys(chk).every(function(k){ return chk[k] === true })) {
-		console.log("Listo para enviar datos");
+		if(debug)
+			console.log("Listo para enviar datos");
 		escribeMAC();
 	}
 }
 
 function crearDirectorio(directorio, permisos = 0755, uid = uidaula, gid=gidaula){
-    console.log("Revisando directorio "+directorio);
+	if(debug)
+		console.log("Revisando directorio "+directorio);
     var fs = require('fs');
     if(fs.existsSync(directorio)) {
     	info = fs.statSync(directorio);
@@ -111,14 +116,16 @@ function crearDirectorio(directorio, permisos = 0755, uid = uidaula, gid=gidaula
     		fs.chmodSync(directorio, permisos);
     	}
     } else {
-        console.log("Creando directorio "+directorio);
+    	if(debug)
+    		console.log("Creando directorio "+directorio);
     	fs.mkdirSync(directorio, permisos);
     	fs.chownSync(directorio, uid, gid);
     }
 }
 
 function checkGroup() {
-	console.log("Revisando grupo aula");
+	if(debug)
+		console.log("Revisando grupo aula");
 	var linuxUser = require('linux-sys-user');
 	linuxUser.getGroupInfo('aula', function(err, group) {
 		gidaula = group.gid;
@@ -133,7 +140,8 @@ function checkGroup() {
 }
 
 function checkUser() {
-	console.log("Revisando usuario aula");
+	if(debug)
+		console.log("Revisando usuario aula");
 	var linuxUser = require('linux-sys-user');
 	linuxUser.getUserInfo('aula', function (err, user) {
 		uidaula = user.uid;
@@ -148,7 +156,8 @@ function checkUser() {
 }
 
 function creaDirectorios() {
-	console.log("Creando directorios");
+	if(debug)
+		console.log("Creando directorios");
 	crearDirectorio(config_dir);
 	crearDirectorio(config_dir + "logs");
 	crearDirectorio(config_dir + "archivos");
@@ -206,7 +215,7 @@ function yaEjecutando() {
 	var fs = require('fs');
 	var lockfile = config_dir + lock_file;
     if(fs.existsSync(lockfile)) {
-    	console.log("Ya estamos ejecutando");
+    	console.log("El proceso solo puede ejecutarse una vez");
     	process.exit(2);
     } else {
     	fs.writeFileSync(lockfile,"1");
@@ -216,12 +225,15 @@ function yaEjecutando() {
 
 function exitHandler() {
 	const exec = require('child_process').exec;
-	console.log("Iniciando update");
+	if(debug)
+		console.log("Iniciando update");
 	var cmd = exec("npm update -g aulaaprende", {cwd: "/", maxBuffer: 200 * 1024},(error, stdout, stderr) => {
 		if(error) {
-			console.log("Error al actualizar");
+			if(debug)
+				console.log("Error al actualizar");
 		} else {
-			console.log("Update OK");
+			if(debug)
+				console.log("Update OK");
 		}
 	});
 	var fs = require('fs');
@@ -229,7 +241,8 @@ function exitHandler() {
 	if(fs.existsSync(lockfile)) {
 		fs.unlinkSync(lockfile);
 	}
-	console.log("Finalizando ejecución");
+	if(debug)
+		console.log("Finalizando ejecución");
 }
 
 
@@ -261,9 +274,10 @@ function checkCron() {
 
 // Revisar si ejecutamos como root y verificar el usuario
 if(require("os").userInfo().username=="root") {
-	console.log("Ejecutando como root");
+	if(debug)
+		console.log("Ejecutando como root");
 	checkCron();
 } else {
-	console.log("Error ejecutando como "+require("os").userInfo().username+" debeejecutar como root");
+	console.log("Error ejecutando como "+require("os").userInfo().username+" debe ejecutar como root");
 	process.exit(1);
 }
