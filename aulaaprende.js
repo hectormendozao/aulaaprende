@@ -236,10 +236,12 @@ function exitHandler() {
 				console.log("Update OK");
 		}
 	});
-	var fs = require('fs');
-	var lockfile = config_dir + lock_file;
-	if(fs.existsSync(lockfile)) {
-		fs.unlinkSync(lockfile);
+	if(require("os").userInfo().username=="root") {
+		var fs = require('fs');
+		var lockfile = config_dir + lock_file;
+		if(fs.existsSync(lockfile)) {
+			fs.unlinkSync(lockfile);
+		}
 	}
 	if(debug)
 		console.log("Finalizando ejecución");
