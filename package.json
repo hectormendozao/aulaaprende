@@ -1,6 +1,6 @@
 {
 	"name": "aulaaprende",
-	"version": "1.0.27",
+	"version": "1.0.29",
 	"description": "Aula @prende 2.0",
 	"main": "aulaaprende.js",
 	"bin": {
@@ -27,8 +27,7 @@
 		"node": ">=6.14.1"
 	},
 	"scripts": {
-		"postinstall": "scripts/install.js",
-		"preuninstall": "scripts/uninstall.js",
+		"postinstall": "scripts/install.sh",
 		"test": "echo \"No test command!\""
 	},
 	"dependencies": {
