@@ -1,11 +1,8 @@
 {
 	"name": "aulaaprende",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"description": "Aula @prende 2.0",
 	"main": "aulaaprende.js",
-	"config": {
-		"unsafe-perm": true
-	},
 	"bin": {
 		"aulaaprende": "aulaaprende.js"
 	},
@@ -30,8 +27,11 @@
 		"node": ">=6.14.1"
 	},
 	"scripts": {
-		"postinstall" : "scripts/install.sh",
-		"postuninstall" : "scripts/uninstall.sh",
+		"config": {
+			"unsafe-perm": true
+		},
+		"postinstall": "scripts/install.sh",
+		"postuninstall": "scripts/uninstall.sh",
 		"test": "echo \"No test command!\""
 	},
 	"dependencies": {
