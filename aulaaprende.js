@@ -62,18 +62,20 @@ function revisaConfiguracion() {
 	apache2v = execSync('apache2 -v').toString('utf8');
 	var fs = require('fs');
 	var mendoza = require('./lib/mendoza.js');
+	var mac = [];
+	data.networkInterfaces.forEach(function(item, key) {
+		if(item.mac!='') {
+			mac.push({iface: item.iface, mac: item.mac})
+		}
+	});
+	if(debug)
+		console.log(mac);
     if(fs.existsSync(configCCT)) {
     	if(debug)
     		console.log("Existe CCT");
-    	var mac = [];
-    	data.networkInterfaces.forEach(function(item, key) {
-    		if(item.mac!='') {
-    			mac.push({iface: item.iface, mac: item.mac})
-    		}
-    	});
-    	console.log(mac);
     	var cct = fs.readFileSync(configCCT).toString('UTF-8').trim();
-    	console.log(cct);
+    	if(debug)
+    		console.log(cct);
     	mendoza.enviaRegistro({
 			  action: 'registerCCT',
 	          cct: cct,
@@ -90,6 +92,19 @@ function revisaConfiguracion() {
 		  });
     }
     // TODO Configuración
+	mendoza.enviaRegistro({
+		  action: 'getConfig',
+        mac: mac,
+        aulav: require('./package.json').version,
+        php: phpv,
+        mysql: mysqlv,
+        apache: apache2v,
+        srvinfo: data
+	  }, function(respuesta) {
+		  console.log(respuesta);
+		  var data = JSON.parse(respuesta);
+		  console.log(data);
+	  });
 }
 
 function datos(fn, datos) {
