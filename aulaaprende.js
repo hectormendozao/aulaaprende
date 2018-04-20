@@ -239,18 +239,6 @@ function yaEjecutando() {
 }
 
 function exitHandler() {
-	const exec = require('child_process').exec;
-	if(debug)
-		console.log("Iniciando update");
-	var cmd = exec("npm update -g aulaaprende", {cwd: "/", maxBuffer: 200 * 1024},(error, stdout, stderr) => {
-		if(error) {
-			if(debug)
-				console.log("Error al actualizar");
-		} else {
-			if(debug)
-				console.log("Update OK");
-		}
-	});
 	if(require("os").userInfo().username=="root") {
 		var fs = require('fs');
 		var lockfile = config_dir + lock_file;
