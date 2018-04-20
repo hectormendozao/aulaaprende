@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var debug = true;
+var debug = false;
 if(debug)
 	console.log("Iniciando ejecución");
 var config_dir = '/tmp/temp/var/lib/aula@prende/';
