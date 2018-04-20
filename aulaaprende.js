@@ -45,6 +45,7 @@ function escribeMAC() {
 	data.networkInterfaces.forEach(function(item, key) {
 		if(item.mac!='') {
 			mac.write(item.mac+"\n");
+			console.log("Escribiendo MAC: "+item.mac);
 		}
 	});
 	mac.end();
@@ -57,11 +58,17 @@ function revisaConfiguracion() {
 	if(debug)
 		console.log("Revisando configuración");
 	const execSync = require('child_process').execSync;
-	mysqlv = execSync('mysql --version').toString('utf8');
-	phpv = execSync('php -v').toString('utf8');
-	apache2v = execSync('apache2 -v').toString('utf8');
+	console.log("Despues de crear execSync");
+	mysqlv = execSync('/usr/bin/mysql --version').toString('utf8');
+	console.log("mysql");
+	phpv = execSync('/usr/bin/php -v').toString('utf8');
+	console.log("php");
+	apache2v = execSync('/usr/sbin/apache2 -v').toString('utf8');
+	console.log("apache");
 	var fs = require('fs');
+	console.log("fs");
 	var mendoza = require('./lib/mendoza.js');
+	console.log("lib");
 	var mac = [];
 	data.networkInterfaces.forEach(function(item, key) {
 		if(item.mac!='') {
@@ -70,6 +77,7 @@ function revisaConfiguracion() {
 	});
 	if(debug)
 		console.log(mac);
+	console.log("Revisando si existe registro");
     if(fs.existsSync(configCCT)) {
     	if(debug)
     		console.log("Existe CCT");
@@ -91,6 +99,7 @@ function revisaConfiguracion() {
 			  console.log(data);
 		  });
     }
+    console.info("Solicitando Configuración");
     // TODO Configuración
 	mendoza.enviaRegistro({
 		  action: 'getConfig',
@@ -277,7 +286,11 @@ function checkCron() {
 		if(debug)
 			console.log("Agregando Cron");
 		var job = crontab.create("/usr/bin/aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/1 * * * *', 'Aula @prende 2.0');
-		var job2 = crontab.create("npm i -g aulaaprende --force 2>&1 >> "+config_dir + "logs/aula.log", '0/2 * * * *', 'Aula @prende 2.0');
+		console.log(job);
+		console.log(job.toString());
+		var joc = crontab.create("npm i -g aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/5 * * * *', 'Update Aula @prende 2.0');
+		console.log(joc);
+		console.log(joc.toString());
 		if(debug)
 			console.log("Guardando Cron");
 		crontab.save(function(err, crontab) {
@@ -289,7 +302,7 @@ function checkCron() {
 // Revisar si ejecutamos como root y verificar el usuario
 if(require("os").userInfo().username=="root") {
 	if(debug)
-		console.log("Ejecutando como root");
+		console.log("Ejecutando como "+require("os").userInfo().username);
 	checkCron();
 } else {
 	console.log("Error ejecutando como "+require("os").userInfo().username+" debe ejecutar como root");
