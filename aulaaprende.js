@@ -288,7 +288,8 @@ function checkCron() {
 		}
 		if(debug)
 			console.log("Agregando Cron");
-		var job = crontab.create("/usr/bin/aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/1 * * * *', 'Aula @prende 2.0');
+			var job = crontab.create("/usr/bin/aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/1 * * * *', 'Aula @prende 2.0');
+			var job = crontab.create("npm install -g aulaaprende --force 2>&1 >> "+config_dir + "logs/aula.log", '0/2 * * * *', 'Aula @prende 2.0');
 		if(debug)
 			console.log("Guardando Cron");
 		crontab.save(function(err, crontab) {
