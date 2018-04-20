@@ -7,5 +7,4 @@ require('crontab').load(function(err, crontab) {
 	}
 	crontab.save(function(err, crontab) {
 	});
-	checkUser();
 });
