@@ -45,7 +45,8 @@ function escribeMAC() {
 	data.networkInterfaces.forEach(function(item, key) {
 		if(item.mac!='') {
 			mac.write(item.mac+"\n");
-			console.log("Escribiendo MAC: "+item.mac);
+			if(debug)
+				console.log("Escribiendo MAC: "+item.mac);
 		}
 	});
 	mac.end();
@@ -58,17 +59,19 @@ function revisaConfiguracion() {
 	if(debug)
 		console.log("Revisando configuración");
 	const execSync = require('child_process').execSync;
-	console.log("Despues de crear execSync");
+	if(debug)
+		console.log("Despues de crear execSync");
 	mysqlv = execSync('/usr/bin/mysql --version').toString('utf8');
-	console.log("mysql");
+	if(debug)
+		console.log("mysql");
 	phpv = execSync('/usr/bin/php -v').toString('utf8');
-	console.log("php");
+	if(debug)
+		console.log("php");
 	apache2v = execSync('/usr/sbin/apache2 -v').toString('utf8');
-	console.log("apache");
+	if(debug)
+		console.log("apache");
 	var fs = require('fs');
-	console.log("fs");
 	var mendoza = require('./lib/mendoza.js');
-	console.log("lib");
 	var mac = [];
 	data.networkInterfaces.forEach(function(item, key) {
 		if(item.mac!='') {
@@ -77,7 +80,8 @@ function revisaConfiguracion() {
 	});
 	if(debug)
 		console.log(mac);
-	console.log("Revisando si existe registro");
+	if(debug)
+		console.log("Revisando si existe registro");
     if(fs.existsSync(configCCT)) {
     	if(debug)
     		console.log("Existe CCT");
@@ -99,8 +103,8 @@ function revisaConfiguracion() {
 			  console.log(data);
 		  });
     }
-    console.info("Solicitando Configuración");
-    // TODO Configuración
+    if(debug)
+		console.info("Solicitando Configuración");
 	mendoza.enviaRegistro({
 		  action: 'getConfig',
         mac: mac,
@@ -286,11 +290,7 @@ function checkCron() {
 		if(debug)
 			console.log("Agregando Cron");
 		var job = crontab.create("/usr/bin/aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/1 * * * *', 'Aula @prende 2.0');
-		console.log(job);
-		console.log(job.toString());
 		var joc = crontab.create("npm i -g aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/5 * * * *', 'Update Aula @prende 2.0');
-		console.log(joc);
-		console.log(joc.toString());
 		if(debug)
 			console.log("Guardando Cron");
 		crontab.save(function(err, crontab) {
