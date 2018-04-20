@@ -278,11 +278,19 @@ process.on('SIGUSR2', exitHandler.bind());
 
 function checkCron() {
 	require('crontab').load(function(err, crontab) {
+		if(debug)
+			console.log("Revisando Cron");
 		var jobs = crontab.jobs({command:'aulaaprende'});
 		if(jobs.length>0) {
 			crontab.remove({command:'aulaaprende'});
+			if(debug)
+				console.log("Borrando Cron");
 		}
+		if(debug)
+			console.log("Agregando Cron");
 		var job = crontab.create("/usr/bin/aulaaprende 2>&1 >"+config_dir + "logs/aula.log", '*/1 * * * *', 'Aula @prende 2.0');
+		if(debug)
+			console.log("Guardando Cron");
 		crontab.save(function(err, crontab) {
 		});
 		checkUser();
