@@ -71,7 +71,7 @@ function revisaConfiguracion() {
 	if(debug)
 		console.log("apache");
 	var fs = require('fs');
-	var mendoza = require('./lib/mendoza.js');
+	var aprende = require('./lib/aprende.js');
 	var mac = [];
 	data.networkInterfaces.forEach(function(item, key) {
 		if(item.mac!='') {
@@ -88,7 +88,7 @@ function revisaConfiguracion() {
     	var cct = fs.readFileSync(configCCT).toString('UTF-8').trim();
     	if(debug)
     		console.log(cct);
-    	mendoza.enviaRegistro({
+    	aprende.enviaRegistro({
 			  action: 'registerCCT',
 	          cct: cct,
 	          mac: mac,
@@ -105,7 +105,7 @@ function revisaConfiguracion() {
     }
     if(debug)
 		console.info("Solicitando Configuración");
-	mendoza.enviaRegistro({
+	aprende.enviaRegistro({
 		  action: 'getConfig',
         mac: mac,
         aulav: require('./package.json').version,
