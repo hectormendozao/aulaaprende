@@ -251,11 +251,9 @@ function yaEjecutando() {
     } else {
     	fs.writeFileSync(lockfile,"1");
     	nconf.file({ file: config_dir +'/aula.config'});
-    	console.log('uuid: ' + nconf.get('uuid'));
     	if(nconf.get('uuid')==undefined) {
     		nconf.set('uuid',uuidv4());
     		nconf.save();
-        	console.log('uuid: ' + nconf.get('uuid'));
     	}
     	recopilaDatos();
     }
@@ -310,7 +308,7 @@ function checkCron() {
 }
 
 var nconf = require('nconf');
-console.log(__dirname);
+const mypath =__dirname;
 
 
 // Revisar si ejecutamos como root y verificar el usuario
