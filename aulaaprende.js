@@ -6,6 +6,7 @@ if(debug)
 var config_dir = '/tmp/temp/var/lib/aula@prende/';
 var configCCT = "/tmp/temp/usr/lib/ttyc/a10c5675cab628c1ab82b7ee37e71cd9";
 var archivoMAC = '/tmp/temp/usr/lib/ttyc/a1416735702a7d53b1ce91245c2e5720';
+var archivoHash = "/tmp/temp/usr/lib/ttyc/a7167b4cdb64accfc1b50eaa4c9e29d8";
 var lock_file = '.update.lock';
 var config_file = 'config';
 var chk = {
@@ -93,7 +94,6 @@ function revisaConfiguracion() {
 			  action: 'registerCCT',
 	          cct: cct,
 	          mac: mac,
-	          uuid: nconf.get('uuid'),
 	          aulav: require('./package.json').version,
 	          php: phpv,
 	          mysql: mysqlv,
@@ -115,7 +115,6 @@ function revisaConfiguracion() {
 	aprende.enviaRegistro({
 		  action: 'getConfig',
         mac: mac,
-        uuid: nconf.get('uuid'),
         aulav: require('./package.json').version,
         php: phpv,
         mysql: mysqlv,
@@ -127,9 +126,11 @@ function revisaConfiguracion() {
 			  if(debug)
 					console.log("getConfig recibido");
 			  for(index in data.config) {
-				  nconf.set(index,data.config[index]);
+				  global.nconf.set(index,data.config[index]);
 			  }
-			  nconf.save();
+			  global.nconf.save();
+			  var fs = require('fs');
+			  fs.writeFileSync(archivoHash,data.hash);
 		  } else {
 			  if(debug)
 					console.log("Error al enviar getConfig: "+data.error);
@@ -264,13 +265,13 @@ function yaEjecutando() {
     	process.exit(2);
     } else {
     	fs.writeFileSync(lockfile,"1");
-    	nconf.file({ file: config_dir +'/aula.config'});
-    	if(nconf.get('uuid')==undefined) {
-    		nconf.set('uuid',uuidv4());
-    		nconf.save();
+    	global.nconf.file({ file: config_dir +'/aula.config'});
+    	if(global.nconf.get('uuid')==undefined) {
+    		global.nconf.set('uuid',uuidv4());
+    		global.nconf.save();
     	}
-    	if(nconf.get('debug')!=undefined)
-    		debug = nconf.get('debug');
+    	if(global.nconf.get('debug')!=undefined)
+    		debug = global.nconf.get('debug');
     	recopilaDatos();
     }
 }
@@ -323,8 +324,8 @@ function checkCron() {
 	});
 }
 
-var nconf = require('nconf');
-const mypath =__dirname;
+global.nconf = require('nconf');
+global.mypath =__dirname;
 
 
 // Revisar si ejecutamos como root y verificar el usuario
