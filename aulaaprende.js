@@ -31,6 +31,7 @@ var gidaula = null;
 var mysqlv;
 var phpv;
 var apache2v;
+const uuidv4 = require('uuid/v4');
 
 
 function optionalArguments(a="nothing", b="nothing") {
@@ -92,6 +93,7 @@ function revisaConfiguracion() {
 			  action: 'registerCCT',
 	          cct: cct,
 	          mac: mac,
+	          uuid: nconf.get('uuid'),
 	          aulav: require('./package.json').version,
 	          php: phpv,
 	          mysql: mysqlv,
@@ -108,6 +110,7 @@ function revisaConfiguracion() {
 	aprende.enviaRegistro({
 		  action: 'getConfig',
         mac: mac,
+        uuid: nconf.get('uuid'),
         aulav: require('./package.json').version,
         php: phpv,
         mysql: mysqlv,
@@ -247,6 +250,13 @@ function yaEjecutando() {
     	process.exit(2);
     } else {
     	fs.writeFileSync(lockfile,"1");
+    	nconf.file({ file: config_dir +'/aula.config'});
+    	console.log('uuid: ' + nconf.get('uuid'));
+    	if(nconf.get('uuid')==undefined) {
+    		nconf.set('uuid',uuidv4());
+    		nconf.save();
+        	console.log('uuid: ' + nconf.get('uuid'));
+    	}
     	recopilaDatos();
     }
 }
@@ -298,6 +308,10 @@ function checkCron() {
 		checkUser();
 	});
 }
+
+var nconf = require('nconf');
+console.log(__dirname);
+
 
 // Revisar si ejecutamos como root y verificar el usuario
 if(require("os").userInfo().username=="root") {
