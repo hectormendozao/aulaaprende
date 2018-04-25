@@ -102,9 +102,11 @@ function revisaConfiguracion() {
 		  }, function(respuesta) {
 			  var data = JSON.parse(respuesta);
 			  if(data.success) {
-				  console.log("registerCCT enviado");
+				  if(debug)
+						console.log("registerCCT enviado");
 			  } else {
-				  console.log("Error al enviar registerCCT: "+data.error);
+				  if(debug)
+						console.log("Error al enviar registerCCT: "+data.error);
 			  }
 		  });
     }
@@ -122,9 +124,15 @@ function revisaConfiguracion() {
 	  }, function(respuesta) {
 		  var data = JSON.parse(respuesta);
 		  if(data.success) {
-			  console.log("getConfig enviado");
+			  if(debug)
+					console.log("getConfig recibido");
+			  for(index in data.config) {
+				  nconf.set(index,data.config[index]);
+			  }
+			  nconf.save();
 		  } else {
-			  console.log("Error al enviar getConfig: "+data.error);
+			  if(debug)
+					console.log("Error al enviar getConfig: "+data.error);
 		  }
 	  });
 }
@@ -261,6 +269,8 @@ function yaEjecutando() {
     		nconf.set('uuid',uuidv4());
     		nconf.save();
     	}
+    	if(nconf.get('debug')!=undefined)
+    		debug = nconf.get('debug');
     	recopilaDatos();
     }
 }
