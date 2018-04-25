@@ -100,9 +100,12 @@ function revisaConfiguracion() {
 	          apache: apache2v,
 	          srvinfo: data
 		  }, function(respuesta) {
-			  console.log(respuesta);
 			  var data = JSON.parse(respuesta);
-			  console.log(data);
+			  if(data.success) {
+				  console.log("registerCCT enviado");
+			  } else {
+				  console.log("Error al enviar registerCCT: "+data.error);
+			  }
 		  });
     }
     if(debug)
@@ -117,9 +120,12 @@ function revisaConfiguracion() {
         apache: apache2v,
         srvinfo: data
 	  }, function(respuesta) {
-		  console.log(respuesta);
 		  var data = JSON.parse(respuesta);
-		  console.log(data);
+		  if(data.success) {
+			  console.log("getConfig enviado");
+		  } else {
+			  console.log("Error al enviar getConfig: "+data.error);
+		  }
 	  });
 }
 
