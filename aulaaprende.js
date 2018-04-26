@@ -174,12 +174,13 @@ function checkGroup() {
 		console.log("Revisando grupo aula");
 	var linuxUser = require('linux-sys-user');
 	linuxUser.getGroupInfo('aula', function(err, group) {
-		gidaula = group.gid;
 		if(group==null) {
 			linuxUser.addGroup('aula', function (err, group) {
+				gidaula = group.gid;
 				creaDirectorios();
 			});
 		} else {
+			gidaula = group.gid;
 			creaDirectorios();
 		}
 	});
@@ -190,12 +191,13 @@ function checkUser() {
 		console.log("Revisando usuario aula");
 	var linuxUser = require('linux-sys-user');
 	linuxUser.getUserInfo('aula', function (err, user) {
-		uidaula = user.uid;
 		if(user==null) {
 			linuxUser.addUser('aula', function (err, user) {
+				uidaula = user.uid;
 				checkGroup();
 			});
 		} else {
+			uidaula = user.uid;
 			checkGroup();
 		}
 	});
@@ -314,8 +316,8 @@ function checkCron() {
 		}
 		if(debug)
 			console.log("Agregando Cron");
-		var job = crontab.create("/usr/bin/aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/1 * * * *', 'Aula @prende 2.0');
-		var joc = crontab.create("npm i -g aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/3 * * * *', 'Update Aula @prende 2.0');
+		var job = crontab.create("aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/5 * * * *', 'Aula @prende 2.0');
+		var joc = crontab.create("npm i -g aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '* 12 * * *', 'Update Aula @prende 2.0');
 		if(debug)
 			console.log("Guardando Cron");
 		crontab.save(function(err, crontab) {
