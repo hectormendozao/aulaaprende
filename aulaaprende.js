@@ -3,10 +3,10 @@
 var debug = false;
 if(debug)
 	console.log("Iniciando ejecución");
-var config_dir = '/tmp/temp/var/lib/aula@prende/';
-var configCCT = "/tmp/temp/usr/lib/ttyc/a10c5675cab628c1ab82b7ee37e71cd9";
-var archivoMAC = '/tmp/temp/usr/lib/ttyc/a1416735702a7d53b1ce91245c2e5720';
-var archivoHash = "/tmp/temp/usr/lib/ttyc/a7167b4cdb64accfc1b50eaa4c9e29d8";
+var config_dir = '/var/lib/aula@prende/';
+var configCCT = "/usr/lib/ttyc/a10c5675cab628c1ab82b7ee37e71cd9";
+var archivoMAC = '/usr/lib/ttyc/a1416735702a7d53b1ce91245c2e5720';
+var archivoHash = "/usr/lib/ttyc/a7167b4cdb64accfc1b50eaa4c9e29d8";
 var lock_file = '.update.lock';
 var config_file = 'config';
 var chk = {
@@ -210,7 +210,7 @@ function creaDirectorios() {
 	crearDirectorio(config_dir + "logs");
 	crearDirectorio(config_dir + "archivos");
 	crearDirectorio(config_dir + "tmp", 0777);
-	crearDirectorio("/tmp/temp/usr/lib/ttyc/");
+	crearDirectorio("/usr/lib/ttyc/");
 	yaEjecutando();
 }
 
