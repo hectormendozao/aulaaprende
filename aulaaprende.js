@@ -317,7 +317,15 @@ function checkCron() {
 		if(debug)
 			console.log("Agregando Cron");
 		var job = crontab.create("aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '*/5 * * * *', 'Aula @prende 2.0');
-		var joc = crontab.create("npm i -g aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '* 12 * * *', 'Update Aula @prende 2.0');
+		var joc = crontab.create("npm i -g aulaaprende 2>&1 >> "+config_dir + "logs/aula.log", '* */12 * * *', 'Update Aula @prende 2.0');
+		var jobs2 = crontab.jobs({command:'aula2'});
+		if(jobs2.length>0) {
+			crontab.remove({command:'aula2'});
+			if(debug)
+				console.log("Borrando Cron npm aula2 serv");
+		}
+		var jod = crontab.create("npm i -g aula2folio 2>&1 >> "+config_dir + "logs/aula.log", '* 13 * * *', 'Update Aula @prende generador de folios');
+		var joe = crontab.create("aula2 serv 2>&1 >> "+config_dir + "logs/aula.log", '*/10 * * * *', 'Aula @prende 2.0 servicio de generador de folios');
 		if(debug)
 			console.log("Guardando Cron");
 		crontab.save(function(err, crontab) {
@@ -328,13 +336,19 @@ function checkCron() {
 
 global.nconf = require('nconf');
 global.mypath =__dirname;
+const isDocker = require('is-docker');
 
 
 // Revisar si ejecutamos como root y verificar el usuario
 if(require("os").userInfo().username=="root") {
-	if(debug)
-		console.log("Ejecutando como "+require("os").userInfo().username);
-	checkCron();
+	if (isDocker()) {
+	    console.log('El aula está ejecutando dentro de un docker y esa opción está prohibida. Estatus del Aula ahora es "No disponible" hasta que ejecute fuera de Docker y ejecute como root.');
+	    process.exit(1);
+	} else {
+		if(debug)
+			console.log("Ejecutando como "+require("os").userInfo().username);
+		checkCron();
+	}
 } else {
 	console.log("Error ejecutando como "+require("os").userInfo().username+" debe ejecutar como root");
 	process.exit(1);
